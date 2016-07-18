@@ -40,6 +40,9 @@ import org.nuxeo.runtime.model.ComponentContext;
 import org.nuxeo.runtime.model.ComponentInstance;
 import org.nuxeo.runtime.model.DefaultComponent;
 
+/**
+ * @deprecated Since 8.4. See 'soffice' use with {@link org.nuxeo.ecm.core.convert.plugins.CommandLineConverter} instead
+ */
 public class OOoManagerComponent extends DefaultComponent implements OOoManagerService {
 
     protected static final Log log = LogFactory.getLog(OOoManagerComponent.class);
@@ -123,6 +126,8 @@ public class OOoManagerComponent extends DefaultComponent implements OOoManagerS
     @Override
     public void startOOoManager() throws IOException {
         DefaultOfficeManagerConfiguration configuration = new DefaultOfficeManagerConfiguration();
+        if (!descriptor.isEnabled())
+            return;
 
         starting = true;
 
@@ -222,6 +227,7 @@ public class OOoManagerComponent extends DefaultComponent implements OOoManagerS
         } finally {
             starting = false;
         }
+
     }
 
     public Throwable unwrapException(Throwable t) {

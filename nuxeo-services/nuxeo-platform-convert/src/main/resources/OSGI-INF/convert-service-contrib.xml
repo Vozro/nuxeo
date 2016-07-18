@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.ecm.platform.convert.plugins">
-
-  <extension target="org.nuxeo.ecm.core.convert.service.ConversionServiceImpl"
-    point="converter">
-
+  
+  <extension target="org.nuxeo.ecm.core.convert.service.ConversionServiceImpl" point="converter">
+    
     <converter name="2utf8" class="org.nuxeo.ecm.platform.convert.plugins.UTF8CharsetConverter">
       <sourceMimeType>text/xml</sourceMimeType>
       <sourceMimeType>text/html</sourceMimeType>
@@ -16,12 +15,12 @@
       <destinationMimeType>text/csv</destinationMimeType>
       <destinationMimeType>text/tsv</destinationMimeType>
     </converter>
-
+    
     <converter name="zip2html" class="org.nuxeo.ecm.platform.convert.plugins.Zip2HtmlConverter">
       <destinationMimeType>text/html</destinationMimeType>
       <sourceMimeType>application/zip</sourceMimeType>
     </converter>
-
+    
     <converter name="wpd2text" class="org.nuxeo.ecm.platform.convert.plugins.WordPerfect2TextConverter">
       <sourceMimeType>application/wordperfect</sourceMimeType>
       <destinationMimeType>text/plain</destinationMimeType>
@@ -29,16 +28,12 @@
         <parameter name="CommandLineName">wpd2text</parameter>
       </parameters>
     </converter>
-
-    <converter name="wpd2html" class="org.nuxeo.ecm.platform.convert.plugins.JODBasedConverter">
-               <sourceMimeType>application/wordperfect</sourceMimeType>
-               <destinationMimeType>text/html</destinationMimeType>
-               <parameters>
-                       <parameter name="ooo_host_name">${org.nuxeo.ecm.platform.transform.ooo.host.name}</parameter>
-                       <parameter name="ooo_host_port">${org.nuxeo.ecm.platform.transform.ooo.host.port}</parameter>
-               </parameters>
+    
+    <converter name="wpd2html" class="org.nuxeo.ecm.core.convert.plugins.CommandLineConverter">
+      <sourceMimeType>application/wordperfect</sourceMimeType>
+      <destinationMimeType>text/html</destinationMimeType>
     </converter>
-
+    
     <converter name="pdf2html" class="org.nuxeo.ecm.platform.convert.plugins.PDF2HtmlConverter">
       <sourceMimeType>application/pdf</sourceMimeType>
       <destinationMimeType>text/html</destinationMimeType>
@@ -46,7 +41,7 @@
         <parameter name="CommandLineName">pdftohtml</parameter>
       </parameters>
     </converter>
-
+    
     <converter name="pdf2image" class="org.nuxeo.ecm.platform.convert.plugins.PDF2ImageConverter">
       <sourceMimeType>application/pdf</sourceMimeType>
       <destinationMimeType>image/jpeg</destinationMimeType>
@@ -56,11 +51,11 @@
         <parameter name="CommandLineName">pdftoimage</parameter>
       </parameters>
     </converter>
-
-   <converter name="any2ods"
-      class="org.nuxeo.ecm.platform.convert.plugins.JODBasedConverter">
+    
+    <converter name="any2ods"
+               class="org.nuxeo.ecm.core.convert.plugins.CommandLineConverter">
       <destinationMimeType>application/vnd.oasis.opendocument.spreadsheet</destinationMimeType>
-
+      
       <!-- Microsoft office documents -->
       <sourceMimeType>application/vnd.ms-excel</sourceMimeType>
       <!-- Microsoft office 2007 documents -->
@@ -77,22 +72,17 @@
       <sourceMimeType>
         application/vnd.oasis.opendocument.spreadsheet-template
       </sourceMimeType>
-
-    <parameters>
-        <parameter name="ooo_host_name">
-          ${org.nuxeo.ecm.platform.transform.ooo.host.name}
-        </parameter>
-        <parameter name="ooo_host_port">
-          ${org.nuxeo.ecm.platform.transform.ooo.host.port}
-        </parameter>
-    </parameters>
-
+      
+      <parameters>
+        <parameter name="CommandLineName">soffice</parameter>
+      </parameters>
+    
     </converter>
-
-   <converter name="any2odp"
-      class="org.nuxeo.ecm.platform.convert.plugins.JODBasedConverter">
+    
+    <converter name="any2odp"
+               class="org.nuxeo.ecm.core.convert.plugins.CommandLineConverter">
       <destinationMimeType>application/vnd.oasis.opendocument.presentation</destinationMimeType>
-
+      
       <!-- Microsoft office documents -->
       <sourceMimeType>application/vnd.ms-powerpoint</sourceMimeType>
       <!-- Microsoft office 2007 documents -->
@@ -109,23 +99,17 @@
       <sourceMimeType>
         application/vnd.oasis.opendocument.presentation-template
       </sourceMimeType>
-
-    <parameters>
-        <parameter name="ooo_host_name">
-          ${org.nuxeo.ecm.platform.transform.ooo.host.name}
-        </parameter>
-        <parameter name="ooo_host_port">
-          ${org.nuxeo.ecm.platform.transform.ooo.host.port}
-        </parameter>
-    </parameters>
-
+      
+      <parameters>
+        <parameter name="CommandLineName">soffice</parameter>
+      </parameters>
+    
     </converter>
-
-
-   <converter name="any2pdf"
-      class="org.nuxeo.ecm.platform.convert.plugins.JODBasedConverter">
+    
+    <converter name="any2pdf"
+               class="org.nuxeo.ecm.core.convert.plugins.CommandLineConverter">
       <destinationMimeType>application/pdf</destinationMimeType>
-
+      
       <sourceMimeType>text/xml</sourceMimeType>
       <sourceMimeType>text/html</sourceMimeType>
       <sourceMimeType>text/plain</sourceMimeType>
@@ -133,13 +117,12 @@
       <sourceMimeType>application/rtf</sourceMimeType>
       <sourceMimeType>text/csv</sourceMimeType>
       <sourceMimeType>text/tsv</sourceMimeType>
-
-
+      
       <!-- Microsoft office documents -->
       <sourceMimeType>application/msword</sourceMimeType>
       <sourceMimeType>application/vnd.ms-powerpoint</sourceMimeType>
       <sourceMimeType>application/vnd.ms-excel</sourceMimeType>
-
+      
       <!-- Microsoft office 2007 documents -->
       <sourceMimeType>
         application/vnd.openxmlformats-officedocument.wordprocessingml.document
@@ -150,7 +133,7 @@
       <sourceMimeType>
         application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
       </sourceMimeType>
-
+      
       <!-- OpenOffice.org 1.x documents -->
       <sourceMimeType>application/vnd.sun.xml.writer</sourceMimeType>
       <sourceMimeType>application/vnd.sun.xml.writer.template</sourceMimeType>
@@ -160,7 +143,7 @@
       <sourceMimeType>application/vnd.sun.xml.calc.template</sourceMimeType>
       <sourceMimeType>application/vnd.sun.xml.draw</sourceMimeType>
       <sourceMimeType>application/vnd.sun.xml.draw.template</sourceMimeType>
-
+      
       <!-- OpenOffice.org 2.x documents -->
       <sourceMimeType>
         application/vnd.oasis.opendocument.spreadsheet
@@ -184,25 +167,19 @@
       <sourceMimeType>
         application/vnd.oasis.opendocument.graphics-template
       </sourceMimeType>
-
+      
       <!-- WordPerfect -->
       <sourceMimeType>application/wordperfect</sourceMimeType>
-
-    <parameters>
-        <parameter name="ooo_host_name">
-          ${org.nuxeo.ecm.platform.transform.ooo.host.name}
-        </parameter>
-        <parameter name="ooo_host_port">
-          ${org.nuxeo.ecm.platform.transform.ooo.host.port}
-        </parameter>
-    </parameters>
-   </converter>
-
-
+      
+      <parameters>
+        <parameter name="CommandLineName">soffice</parameter>
+      </parameters>
+    </converter>
+    
     <converter name="office2html"
-      class="org.nuxeo.ecm.platform.convert.plugins.JODBasedConverter">
+               class="org.nuxeo.ecm.core.convert.plugins.CommandLineConverter">
       <destinationMimeType>text/html</destinationMimeType>
-
+      
       <sourceMimeType>text/xml</sourceMimeType>
       <sourceMimeType>text/html</sourceMimeType>
       <sourceMimeType>text/plain</sourceMimeType>
@@ -210,12 +187,12 @@
       <sourceMimeType>application/rtf</sourceMimeType>
       <sourceMimeType>text/csv</sourceMimeType>
       <sourceMimeType>text/tsv</sourceMimeType>
-
+      
       <!-- Microsoft office documents -->
       <sourceMimeType>application/msword</sourceMimeType>
       <sourceMimeType>application/vnd.ms-powerpoint</sourceMimeType>
       <sourceMimeType>application/vnd.ms-excel</sourceMimeType>
-
+      
       <!-- Microsoft office 2007 documents -->
       <sourceMimeType>
         application/vnd.openxmlformats-officedocument.wordprocessingml.document
@@ -226,7 +203,7 @@
       <sourceMimeType>
         application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
       </sourceMimeType>
-
+      
       <!-- OpenOffice.org 1.x documents -->
       <sourceMimeType>application/vnd.sun.xml.writer</sourceMimeType>
       <sourceMimeType>application/vnd.sun.xml.writer.template</sourceMimeType>
@@ -236,7 +213,7 @@
       <sourceMimeType>application/vnd.sun.xml.calc.template</sourceMimeType>
       <sourceMimeType>application/vnd.sun.xml.draw</sourceMimeType>
       <sourceMimeType>application/vnd.sun.xml.draw.template</sourceMimeType>
-
+      
       <!-- OpenOffice.org 2.x documents -->
       <sourceMimeType>
         application/vnd.oasis.opendocument.spreadsheet
@@ -260,29 +237,25 @@
       <sourceMimeType>
         application/vnd.oasis.opendocument.graphics-template
       </sourceMimeType>
-
-    <parameters>
-        <parameter name="ooo_host_name">
-          ${org.nuxeo.ecm.platform.transform.ooo.host.name}
-        </parameter>
-        <parameter name="ooo_host_port">
-          ${org.nuxeo.ecm.platform.transform.ooo.host.port}
-        </parameter>
-     </parameters>
+      
+      <parameters>
+        <parameter name="CommandLineName">soffice</parameter>
+      </parameters>
+    
     </converter>
-
+    
     <converter name="md2html" class="org.nuxeo.ecm.platform.convert.plugins.Md2HtmlConverter">
       <destinationMimeType>text/html</destinationMimeType>
       <sourceMimeType>text/x-web-markdown</sourceMimeType>
     </converter>
-
+    
     <converter name="md2pdf">
       <conversionSteps>
         <subconverter>md2html</subconverter>
         <subconverter>any2pdf</subconverter>
       </conversionSteps>
     </converter>
-
+    
     <converter name="iwork2pdf" class="org.nuxeo.ecm.platform.convert.plugins.IWork2PDFConverter">
       <destinationMimeType>application/pdf</destinationMimeType>
       <sourceMimeType>application/vnd.apple.iwork</sourceMimeType>
@@ -290,14 +263,14 @@
       <sourceMimeType>application/vnd.apple.numbers</sourceMimeType>
       <sourceMimeType>application/vnd.apple.keynote</sourceMimeType>
     </converter>
-
+    
     <converter name="iwork2html">
       <conversionSteps>
         <subconverter>iwork2pdf</subconverter>
         <subconverter>pdf2html</subconverter>
       </conversionSteps>
     </converter>
-
+  
   </extension>
 
 </component>

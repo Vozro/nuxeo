@@ -46,7 +46,7 @@ public class TestOOoServiceManagerService extends NXRuntimeTestCase {
         super.setUp();
         deployBundle("org.nuxeo.ecm.platform.convert");
         deployBundle("org.nuxeo.ecm.platform.convert.test");
-        deployContrib("org.nuxeo.ecm.platform.convert.test", "test-ooo-manager-contrib.xml");
+        deployContrib("org.nuxeo.ecm.platform.convert.test", "OSGI-INF/test-ooo-manager-contrib.xml");
     }
 
     @Override
@@ -58,7 +58,7 @@ public class TestOOoServiceManagerService extends NXRuntimeTestCase {
 
     @Test
     public void testServiceRegistration() throws Exception {
-        ods = Framework.getLocalService(OOoManagerService.class);
+        ods = Framework.getService(OOoManagerService.class);
         assertNotNull(ods);
 
         ods.startOOoManager();
@@ -81,7 +81,7 @@ public class TestOOoServiceManagerService extends NXRuntimeTestCase {
     @Test
     public void testSocketConnection() throws Exception {
         Framework.getProperties().load(new FileInputStream(getResource("jodSocket.properties").getFile()));
-        ods = Framework.getLocalService(OOoManagerService.class);
+        ods = Framework.getService(OOoManagerService.class);
         assertNotNull(ods);
 
         ods.startOOoManager();
@@ -99,5 +99,4 @@ public class TestOOoServiceManagerService extends NXRuntimeTestCase {
         OfficeDocumentConverter converter = ods.getDocumentConverter();
         assertNotNull(converter);
     }
-
 }

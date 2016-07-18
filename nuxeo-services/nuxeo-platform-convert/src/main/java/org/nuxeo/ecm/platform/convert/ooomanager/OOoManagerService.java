@@ -15,8 +15,8 @@
  *
  * Contributors:
  *     Nuxeo - initial API and implementation
+ *     Laurent Doguin
  *
- * $Id$
  */
 
 package org.nuxeo.ecm.platform.convert.ooomanager;
@@ -28,7 +28,7 @@ import org.artofsolving.jodconverter.OfficeDocumentConverter;
 /**
  * OOoManagerService can either start or stop OpenOffice pool server and return an OfficeDocumentConverter.
  *
- * @author Laurent Doguin
+ * @deprecated Since 8.4. Use 'soffice' with {@link org.nuxeo.ecm.core.convert.plugins.CommandLineConverter} instead
  */
 public interface OOoManagerService {
 

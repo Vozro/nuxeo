@@ -21,12 +21,15 @@
 package org.nuxeo.ecm.core.commandline.executor.service;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.commons.lang3.SystemUtils;
 
 import org.nuxeo.common.xmap.annotation.XNode;
+import org.nuxeo.common.xmap.annotation.XNodeMap;
 import org.nuxeo.common.xmap.annotation.XObject;
 
 /**
@@ -68,6 +71,9 @@ public class CommandLineDescriptor implements Serializable {
     @XNode("installationDirective")
     protected String installationDirective;
 
+    @XNodeMap(value = "testerParameter", key = "@name", type = HashMap.class, componentType = String.class)
+    protected Map<String, String> testerParameters;
+
     protected String installErrorMessage;
 
     public String getInstallErrorMessage() {
@@ -103,6 +109,8 @@ public class CommandLineDescriptor implements Serializable {
     public String getTester() {
         return tester;
     }
+
+    public Map<String, String> getTesterParameters() {return testerParameters;}
 
     public boolean isAvailable() {
         return available;
