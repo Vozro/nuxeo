@@ -1,5 +1,5 @@
 /*
- * (C) Copyright 2006-2011 Nuxeo SA (http://nuxeo.com/) and others.
+ * (C) Copyright 2006-2016 Nuxeo SA (http://nuxeo.com/) and others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ public class CreateZip {
 
     public static final String ZIP_ENTRY_ENCODING_PROPERTY = "zip.entry.encoding";
 
-    public static enum ZIP_ENTRY_ENCODING_OPTIONS {
+    public enum ZIP_ENTRY_ENCODING_OPTIONS {
         ascii
     }
 
@@ -67,13 +67,9 @@ public class CreateZip {
             fileName = blob.getFilename();
         }
         File file = Framework.createTempFile("nxops-createzip-", ".tmp");
-        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(file));
-        Framework.trackFile(file, file);
-        try {
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(file))) {
+            Framework.trackFile(file, file);
             zip(blob, out);
-        } finally {
-            out.finish();
-            out.close();
         }
         return Blobs.createBlob(file, "application/zip", null, fileName);
     }
@@ -84,13 +80,9 @@ public class CreateZip {
             fileName = blobs.isEmpty() ? null : blobs.get(0).getFilename();
         }
         File file = Framework.createTempFile("nxops-createzip-", ".tmp");
-        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(file));
-        Framework.trackFile(file, file);
-        try {
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(file))) {
+            Framework.trackFile(file, file);
             zip(blobs, out);
-        } finally {
-            out.finish();
-            out.close();
         }
         return Blobs.createBlob(file, "application/zip", null, fileName);
     }
@@ -105,28 +97,22 @@ public class CreateZip {
 
     protected void zip(Blob blob, ZipOutputStream out) throws IOException {
         String entry = getFileName(blob);
-        InputStream in = blob.getStream();
-        try {
+        try (InputStream in = blob.getStream()) {
             ZipUtils._zip(entry, in, out);
-        } finally {
-            in.close();
         }
     }
 
     protected void zip(BlobList blobs, ZipOutputStream out) throws IOException {
         // use a set to avoid zipping entries with same names
-        Collection<String> names = new HashSet<String>();
+        Collection<String> names = new HashSet<>();
         int cnt = 1;
         for (Blob blob : blobs) {
             String entry = getFileName(blob);
             if (!names.add(entry)) {
                 entry = "renamed_" + (cnt++) + "_" + entry;
             }
-            InputStream in = blob.getStream();
-            try {
+            try (InputStream in = blob.getStream()) {
                 ZipUtils._zip(entry, in, out);
-            } finally {
-                in.close();
             }
         }
     }
