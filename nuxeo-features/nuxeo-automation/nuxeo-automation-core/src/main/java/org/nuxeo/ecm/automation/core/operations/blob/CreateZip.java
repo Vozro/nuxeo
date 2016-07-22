@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.zip.ZipOutputStream;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.nuxeo.common.utils.StringUtils;
 import org.nuxeo.common.utils.ZipUtils;
 import org.nuxeo.ecm.automation.OperationContext;
@@ -71,7 +72,7 @@ public class CreateZip {
             Framework.trackFile(file, file);
             zip(blob, out);
         }
-        return Blobs.createBlob(file, "application/zip", null, fileName);
+        return createBlob(file);
     }
 
     @OperationMethod
@@ -84,7 +85,7 @@ public class CreateZip {
             Framework.trackFile(file, file);
             zip(blobs, out);
         }
-        return Blobs.createBlob(file, "application/zip", null, fileName);
+        return createBlob(file);
     }
 
     protected String getFileName(Blob blob) {
@@ -123,6 +124,14 @@ public class CreateZip {
             return StringUtils.toAscii(path, true);
         }
         return path;
+    }
+
+    private Blob createBlob(File file) throws IOException {
+        Blob zipBlob = Blobs.createBlob(file, "application/zip", null, fileName);
+        try (InputStream is = zipBlob.getStream()) {
+            zipBlob.setDigest(DigestUtils.md5Hex(is));
+        }
+        return zipBlob;
     }
 
 }
