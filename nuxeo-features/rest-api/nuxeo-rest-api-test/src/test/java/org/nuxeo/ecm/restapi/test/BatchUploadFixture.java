@@ -804,6 +804,10 @@ public class BatchUploadFixture extends BaseTest {
         assertEquals("Test File 5.txt", node.get("name").getValueAsText());
         assertEquals(fileSize, node.get("size").getValueAsText());
         assertEquals("normal", node.get("uploadType").getValueAsText());
+
+        // test removal of invalid file index
+        response = getResponse(RequestType.DELETE, "upload/" + batchId + "/3");
+        assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
     }
 
     private void assertBatchExists(String batchId) {
